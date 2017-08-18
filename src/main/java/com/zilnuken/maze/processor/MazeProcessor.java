@@ -28,42 +28,39 @@ public class MazeProcessor implements IMazeProcessor {
 	 * @see com.zilnuken.maze.processor.IMazeProcessor#process()
 	 */
 	@Override
-	public void process(String... args) {
-		try {
-			String nameFile = null;
+	public void process(String... args) throws GenericException {
 
-			// Read Command Line Parameters.
-			if (args.length == 5) {
-				nameFile = args[0];
-				setStartPoint(new Point(Integer.parseInt(args[1]) - 1, Integer.parseInt(args[2]) - 1));
-				setEndPoint(new Point(Integer.parseInt(args[3]) - 1, Integer.parseInt(args[4]) - 1));
-			} else if (args.length == 1 && "default".equals(args[0])) {
-				nameFile = "Hound Maze(tsv).txt";
-				setStartPoint(new Point(60 - 1, 83 - 1));
-				setEndPoint(new Point(18 - 1, 26 - 1));
-			} else {
-				System.out.println("Usage: filename xStartPoint yStartPoint xEndPoint yEndPoint");
-				System.out.println("Example: Sample1(tsv).txt 31 6 19 17");
-				return;
-			}
-			// Read File.
-			List<String> rows = UtilFile.readFile(nameFile);
+		String nameFile = null;
 
-			// Pase File and Build Maze Solver.
-			IMazeParser parser = new MazeParserTSV();
-			List<List<Integer>> maze = parser.parse(rows);
-			IMazeSolver solver = new MazeSolverBFS(maze);
-
-			// Find Solution
-			setSolutionPoint(solver.solve(getStartPoint(), getEndPoint()));
-
-			if (null == getSolutionPoint()) {
-				throw new GenericException("Not Solution Found");
-			}
-
-		} catch (GenericException error) {
-			System.err.println("Handle Error: " + error.getMessage());
+		// Read Command Line Parameters.
+		if (args.length == 5) {
+			nameFile = args[0];
+			setStartPoint(new Point(Integer.parseInt(args[1]) - 1, Integer.parseInt(args[2]) - 1));
+			setEndPoint(new Point(Integer.parseInt(args[3]) - 1, Integer.parseInt(args[4]) - 1));
+		} else if (args.length == 1 && "default".equals(args[0])) {
+			nameFile = "Hound Maze(tsv).txt";
+			setStartPoint(new Point(60 - 1, 83 - 1));
+			setEndPoint(new Point(18 - 1, 26 - 1));
+		} else {
+			System.out.println("Usage: filename xStartPoint yStartPoint xEndPoint yEndPoint");
+			System.out.println("Example: Sample1(tsv).txt 31 6 19 17");
+			throw new GenericException("Bad Usage");
 		}
+		// Read File.
+		List<String> rows = UtilFile.readFile(nameFile);
+
+		// Pase File and Build Maze Solver.
+		IMazeParser parser = new MazeParserTSV();
+		List<List<Integer>> maze = parser.parse(rows);
+		IMazeSolver solver = new MazeSolverBFS(maze);
+
+		// Find Solution
+		setSolutionPoint(solver.solve(getStartPoint(), getEndPoint()));
+
+		if (null == getSolutionPoint()) {
+			throw new GenericException("Not Solution Found");
+		}
+
 	}
 
 	/*

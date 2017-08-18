@@ -1,5 +1,6 @@
 package com.zilnuken.maze;
 
+import com.zilnuken.maze.exception.GenericException;
 import com.zilnuken.maze.processor.IMazeProcessor;
 import com.zilnuken.maze.processor.MazeProcessor;
 
@@ -12,9 +13,13 @@ import com.zilnuken.maze.processor.MazeProcessor;
 public class MazeApp {
 
 	public static void main(String[] args) {
-		IMazeProcessor processor = new MazeProcessor();
-		processor.process(args);
-		processor.print();
+		try {
+			IMazeProcessor processor = new MazeProcessor();
+			processor.process(args);
+			processor.print();
+		} catch (GenericException error) {
+			System.err.println("Handle Error: " + error.getMessage());
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.zilnuken.maze.processor;
 
+import com.zilnuken.maze.exception.GenericException;
+
 /**
  * Interface of Maze Processor.
  * 
@@ -12,8 +14,10 @@ public interface IMazeProcessor {
 	 * 
 	 * @param args
 	 *            Arguments from command line.
+	 * @throws GenericException
+	 *             If a parse error occur.
 	 */
-	void process(String... args);
+	void process(String... args) throws GenericException;
 
 	/**
 	 * Print Find Solution.
