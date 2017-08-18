@@ -38,7 +38,7 @@ public class MazeProcessor implements IMazeProcessor {
 			setStartPoint(new Point(Integer.parseInt(args[1]) - 1, Integer.parseInt(args[2]) - 1));
 			setEndPoint(new Point(Integer.parseInt(args[3]) - 1, Integer.parseInt(args[4]) - 1));
 		} else if (args.length == 1 && "default".equals(args[0])) {
-			nameFile = "Hound Maze(tsv).txt";
+			nameFile = "Hound_Maze(tsv).txt";
 			setStartPoint(new Point(60 - 1, 83 - 1));
 			setEndPoint(new Point(18 - 1, 26 - 1));
 		} else {
